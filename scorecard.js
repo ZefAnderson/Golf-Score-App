@@ -1,95 +1,37 @@
-class Player {
-  constructor(name, id = getNextId(), scores = []) {
-    this.name = name;
-    this.id = id;
-    this.scores = scores;
-  }
-}
+fetch("https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/courses.json")
+  .then((response) => {
+    console.log('resolved', response);
+    return response.json();
+  }).then(courses => {
+    console.log(courses);
 
-courses = [
-    {
-      "id": 11819,
-      "name": "Thanksgiving Point Golf Course - Lehi, UT",
-      "url": "https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/course11819.json"
-    },
-    {
-      "id": 18300,
-      "name": "Fox Hollow Golf Course - American Fork, UT",
-      "url": "https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/course18300.json"
-    },
-    {
-      "id": 19002,
-      "name": "Fox Hollow Golf Course - American Fork, UT",
-      "url": "https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/course19002.json"
-    }
-]
+    let courseOptionsHtml = '';
+    courses.forEach((course) => {
+      courseOptionsHtml += `<option value="${course.id}">${course.name}</option>`;
+    });
 
-let courseOptionsHtml = '';
-courses.forEach((course) => {
-  courseOptionsHtml += `<option value="${course.id}">${course.name}</option>`;
-});
+    document.getElementById('course-select').innerHTML = courseOptionsHtml; 
 
-document.getElementById('course-select').innerHTML = courseOptionsHtml;
+  }).catch((err) => {
+    console.log('rejected', err);
+  });
 
+  fetch(
+    'https://exquisite-pastelito-9d4dd1.netlif.app/golfapi/course${courseid}.json')
+    .then((response) => {
+      console.log("resolved", response);
+      return response.json();
+  }).then(teeBoxes => {
+    console.log(teeBoxes);
 
-// function getAvailableGolfCourses() {
-//   return fetch(
-//     "https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/courses.json",
-//   { mode: "no-cors", 
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Access-Control-Allow-Origin': '*',
-//       'Access-Control-Allow-Headers': '*'
-//     }
-//   }
-//   ).then(function (response) {
-//     return response.text();
-//   })
-//   .then((data) => {
-//     return data ? JSON.parse(data) : {}
-//   });
-// }
+    let teeBoxSelectHtml = ''
+    teeBoxes.forEach(function (teeBox, index) {
+      teeBoxSelectHtml += `<option value="${index}">${teeBox.teeType.toUpperCase()}, ${teeBox.totalYards} yards</option>`
+    });
 
-// function getGolfCourseDetails(golfCourseId) {
-//   return fetch(
-//     `https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/course${golfCourseId}.json`,
-//     { mode: "no-cors" }
-//   ).then(function (response) {
-//     return response.text();
-//   })
-//   .then((data) => {
-//     return data ? JSON.parse(data) : {}
-//   });
-// }
+    document.getElementById('tee-box-select').innerHTML = teeBoxSelectHtml;
 
-
-// function initSelectCourseDropdown(){
-//   getAvailableGolfCourses().then(
-//     coursesFromRequest => {
-//       courses  = coursesFromRequest
-//       renderSelectCoursesDropdown();
-//     }
-//   )
-// }
-
-// function renderSelectCoursesDropdown() {
-
+  }).catch((err) => {
+    console.log('rejected', err);
+  })
   
-
-//   console.log(courses)
-// }
-
-// initSelectCourseDropdown()
-
-// let courses = [];
-
-// let teeBoxSelectHtml = ''
-// teeBoxes.forEach(function (teeBox, index) {
-//    teeBoxSelectHtml += `<option value="${index}">${teeBox.teeType.toUpperCase()}, ${
-//      teeBox.totalYards
-//    } yards</option>`
-// });
-
-// document.getElementById('tee-box-select').innerHTML = teeBoxSelectHtml;
-
