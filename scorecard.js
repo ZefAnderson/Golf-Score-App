@@ -1,3 +1,11 @@
+class Player {
+  constructor(name, id = getNextId(), scores = []) {
+    this.name = name;
+    this.id = id;
+    this.scores = scores;
+  }
+}
+
 fetch("https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/courses.json")
   .then((response) => {
     console.log('resolved', response);
@@ -35,3 +43,6 @@ fetch("https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/courses.json")
     console.log('rejected', err);
   })
   
+function addlist() {
+  
+}
